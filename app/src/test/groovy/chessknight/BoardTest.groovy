@@ -2,17 +2,17 @@ package chessknight
 
 import spock.lang.Specification
 
-class BoardTest extends Specification {
+class BoardTest extends Specification implements Matrices {
 
-    def "length of Spock's and his friends' names"() {
+    def "should check whether toString() on Board returns expected value"() {
         expect:
-        name.size() == length
+        actual.toString() == expected
 
         where:
-        name     | length
-        "Spock"  | 5
-        "Kirk"   | 4
-        "Scotty" | 6
+        expected                           | actual
+        expectedMatrix3By4()               | matrix3By4()
+        expectedMatrix10By10()             | matrix10By10()
+        expectedMatrix3By4WithEmptyCells() | matrix3By4WithEmptyCells()
     }
 
 }

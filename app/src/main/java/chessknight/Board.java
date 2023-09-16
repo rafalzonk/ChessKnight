@@ -12,28 +12,28 @@ public record Board(int[][] chessBoard) {
         int digitSpace;
 
         if (x * y < 100) {
-            var ceiling = "══╤".repeat(x - 1);
+            var ceiling = "══╤".repeat(x - 2);
             sb.append(ceiling);
             sb.append("══╗\n");
-            separator = "╟" + "──┼".repeat(x - 1) + "╢\n";
+            separator = "╟" + "──┼".repeat(x - 2) + "──╢\n";
             digitSpace = 2;
         } else if (x * y < 1000) {
             var ceiling = "═══╤".repeat(x - 1);
             sb.append(ceiling);
             sb.append("═══╗\n");
-            separator = "╟" + "───┼".repeat(x - 1) + "╢\n";
+            separator = "╟" + "───┼".repeat(x - 1) + "───╢\n";
             digitSpace = 3;
         } else if (x * y < 10000) {
             var ceiling = "════╤".repeat(x - 1);
             sb.append(ceiling);
             sb.append("════╗\n");
-            separator = "╟" + "────┼".repeat(x - 1) + "╢\n";
+            separator = "╟" + "────┼".repeat(x - 1) + "────╢\n";
             digitSpace = 4;
         } else {
             var ceiling = "═════╤".repeat(x - 1);
             sb.append(ceiling);
             sb.append("═════╗\n");
-            separator = "╟" + "─────┼".repeat(x - 1) + "╢\n";
+            separator = "╟" + "─────┼".repeat(x - 1) + "─────╢\n";
             digitSpace = 5;
         }
 
@@ -48,6 +48,8 @@ public record Board(int[][] chessBoard) {
                     .append("║\n")
                     .append(separator);
         }
+
+        sb.append("║");
         for (int j = 0; j < y - 1; j++) {
             sb.append(formatNumber(chessBoard[x - 1][j], digitSpace))
                     .append("│");
@@ -55,11 +57,20 @@ public record Board(int[][] chessBoard) {
         sb.append(formatNumber(chessBoard[x - 1][y - 1], digitSpace))
                 .append("║\n");
 
-        sb.append("╚").append(("═".repeat(digitSpace) + "╧").repeat(x - 1)).append("═".repeat(digitSpace)).append("╝");
+        sb.append("╚")
+                .append(("═".repeat(digitSpace) + "╧").repeat(
+                        x * y < 100 ?
+                                x - 2 :
+                                x - 1
+                ))
+                .append("═".repeat(digitSpace))
+                .append("╝");
         return sb.toString();
     }
 
     private String formatNumber(int n, int digitSpace) {
+        if (n == 0)
+            return " ".repeat(digitSpace);
         if (n < 10)
             return " ".repeat(digitSpace - 1) + n;
         if (n < 100)
