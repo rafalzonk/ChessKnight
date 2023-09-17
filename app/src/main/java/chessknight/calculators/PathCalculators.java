@@ -2,7 +2,7 @@ package chessknight.calculators;
 
 import chessknight.Board;
 
-public class PathCalculatorFacade {
+public class PathCalculators {
 
     private static final PathCalculator[] pathCalculators = {
             new PathCalculator4x4(), new PathCalculator1x1(), new PathCalculator2x2(), new PathCalculator3x3()
