@@ -1,6 +1,6 @@
 package chessknight;
 
-import chessknight.calculators.PathCalculatorFacade;
+import chessknight.calculators.PathCalculators;
 
 import java.util.Optional;
 
@@ -11,6 +11,6 @@ public class ChessKnightService {
     public Optional<Board> calculatePath(int x, int y) {
         if (x != y || x == 4) {
             return Optional.empty();
-        } else return of(PathCalculatorFacade.calculatePath(x, y));
+        } else return of(PathCalculators.calculatePath(x, y));
     }
 }
