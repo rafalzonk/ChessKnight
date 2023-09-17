@@ -2,7 +2,7 @@ package chessknight.calculators
 
 import spock.lang.Specification
 
-class MatrixUtilsTest extends Specification implements MatrixUtilsTestData {
+class MatrixUtilsSpec extends Specification implements MatrixUtilsTestData {
     def "should correctly compare two matrices"() {
         expect:
         MatrixUtils.equals(a, b) == result
