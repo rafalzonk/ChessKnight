@@ -12,28 +12,28 @@ public record Board(int[][] chessBoard) {
         int digitSpace;
 
         if (x * y < 100) {
-            var ceiling = "══╤".repeat(x - 2);
+            var ceiling = "══╤".repeat(y - 1);
             sb.append(ceiling);
             sb.append("══╗\n");
-            separator = "╟" + "──┼".repeat(x - 2) + "──╢\n";
+            separator = "╟" + "──┼".repeat(y - 1) + "──╢\n";
             digitSpace = 2;
         } else if (x * y < 1000) {
-            var ceiling = "═══╤".repeat(x - 1);
+            var ceiling = "═══╤".repeat(y - 1);
             sb.append(ceiling);
             sb.append("═══╗\n");
-            separator = "╟" + "───┼".repeat(x - 1) + "───╢\n";
+            separator = "╟" + "───┼".repeat(y - 1) + "───╢\n";
             digitSpace = 3;
         } else if (x * y < 10000) {
-            var ceiling = "════╤".repeat(x - 1);
+            var ceiling = "════╤".repeat(y - 1);
             sb.append(ceiling);
             sb.append("════╗\n");
-            separator = "╟" + "────┼".repeat(x - 1) + "────╢\n";
+            separator = "╟" + "────┼".repeat(y - 1) + "────╢\n";
             digitSpace = 4;
         } else {
-            var ceiling = "═════╤".repeat(x - 1);
+            var ceiling = "═════╤".repeat(y - 1);
             sb.append(ceiling);
             sb.append("═════╗\n");
-            separator = "╟" + "─────┼".repeat(x - 1) + "─────╢\n";
+            separator = "╟" + "─────┼".repeat(y - 1) + "─────╢\n";
             digitSpace = 5;
         }
 
@@ -58,13 +58,9 @@ public record Board(int[][] chessBoard) {
                 .append("║\n");
 
         sb.append("╚")
-                .append(("═".repeat(digitSpace) + "╧").repeat(
-                        x * y < 100 ?
-                                x - 2 :
-                                x - 1
-                ))
+                .append(("═".repeat(digitSpace) + "╧").repeat(y - 1))
                 .append("═".repeat(digitSpace))
-                .append("╝");
+                .append("╝\n");
         return sb.toString();
     }
 

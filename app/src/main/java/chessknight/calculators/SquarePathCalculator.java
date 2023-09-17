@@ -2,8 +2,8 @@ package chessknight.calculators;
 
 import chessknight.Board;
 
-interface PathCalculator {
-    default Board calculatePath(int x, int y) {
+interface SquarePathCalculator {
+    default Board calculatePath(int size) {
         return null;
     }
 }

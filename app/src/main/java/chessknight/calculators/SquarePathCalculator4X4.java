@@ -2,9 +2,9 @@ package chessknight.calculators;
 
 import chessknight.Board;
 
-class PathCalculator3x3 implements PathCalculator {
+class SquarePathCalculator4X4 implements SquarePathCalculator {
     @Override
-    public Board calculatePath(int x, int y) {
+    public Board calculatePath(int size) {
         return null;
     }
 }
