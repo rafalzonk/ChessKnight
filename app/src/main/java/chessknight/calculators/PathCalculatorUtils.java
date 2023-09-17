@@ -15,9 +15,12 @@ class PathCalculatorUtils {
             tmpY = y;
             x += (x % 2 == 0 ? 1 : -1);
             y += 2;
+            if (!isFree(board, x, y)) {
+                x += (x % 2 == 0 ? 2 : -2);
+            }
         } while (canMove(board, ringLevel, x, y));
 
-        return new KnightPosition(tmpX, tmpY, step - 1);
+        return new KnightPosition(tmpX, tmpY, board[tmpX][tmpY]);
     }
 
     static KnightPosition goSouth(int[][] board, int step, int startX, int startY, int ringLevel) {
@@ -35,9 +38,12 @@ class PathCalculatorUtils {
             tmpY = y;
             x += 2;
             y += (easternBorder == y ? -1 : 1);
+            if (!isFree(board, x, y)) {
+                y += (easternBorder == y ? -2 : 2);
+            }
         } while (canMove(board, ringLevel, x, y));
 
-        return new KnightPosition(tmpX, tmpY, step - 1);
+        return new KnightPosition(tmpX, tmpY, board[tmpX][tmpY]);
     }
 
     static KnightPosition goWest(int[][] board, int step, int startX, int startY, int ringLevel) {
@@ -55,9 +61,12 @@ class PathCalculatorUtils {
             tmpY = y;
             x += (southernBorder == x ? -1 : 1);
             y -= 2;
+            if (!isFree(board, x, y)) {
+                x += (southernBorder == x ? -2 : 2);
+            }
         } while (canMove(board, ringLevel, x, y));
 
-        return new KnightPosition(tmpX, tmpY, step - 1);
+        return new KnightPosition(tmpX, tmpY, board[tmpX][tmpY]);
     }
 
     static KnightPosition goNorth(int[][] board, int step, int startX, int startY, int ringLevel) {
@@ -73,9 +82,12 @@ class PathCalculatorUtils {
             tmpY = y;
             x -= 2;
             y += (y % 2 == 0 ? 1 : -1);
+            if (!isFree(board, x, y)) {
+                y += (y % 2 == 0 ? 2 : -2);
+            }
         } while (canMove(board, ringLevel, x, y));
 
-        return new KnightPosition(tmpX, tmpY, step - 1);
+        return new KnightPosition(tmpX, tmpY, board[tmpX][tmpY]);
     }
 
     static boolean withinRing(int[][] board, int x, int y, int ringLevel) {

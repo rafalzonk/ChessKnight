@@ -89,7 +89,7 @@ class PathCalculatorUtilsSpec extends Specification {
         9    | 7      | 0      || new KnightPosition(1, 1, 4) | [[0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 4, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [3, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 2, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [1, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0]] as int[][]
     }
 
-    def "should not override existing value when going east"() {
+    def "should choose alternative path within same ring when going east"() {
         given:
         def board = new int[size][size];
         board[0][4] = 13
@@ -100,10 +100,10 @@ class PathCalculatorUtilsSpec extends Specification {
 
         where:
         size | startX | startY || position                    | expected
-        5    | 0      | 0      || new KnightPosition(1, 2, 2) | [[1, 0, 0, 0, 13], [0, 0, 2, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]] as int[][]
+        5    | 0      | 0      || new KnightPosition(2, 4, 3) | [[1, 0, 0, 0, 13], [0, 0, 2, 0, 0], [0, 0, 0, 0, 3], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]] as int[][]
     }
 
-    def "should not override existing value when going south"() {
+    def "should choose alternative path within same ring when going south"() {
         given:
         def board = new int[size][size];
         board[4][4] = 13
@@ -114,10 +114,10 @@ class PathCalculatorUtilsSpec extends Specification {
 
         where:
         size | startX | startY || position                    | expected
-        5    | 0      | 4      || new KnightPosition(2, 3, 2) | [[0, 0, 0, 0, 1], [0, 0, 0, 0, 0], [0, 0, 0, 2, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 13]] as int[][]
+        5    | 0      | 4      || new KnightPosition(4, 2, 3) | [[0, 0, 0, 0, 1], [0, 0, 0, 0, 0], [0, 0, 0, 2, 0], [0, 0, 0, 0, 0], [0, 0, 3, 0, 13]] as int[][]
     }
 
-    def "should not override existing value when going west"() {
+    def "should choose alternative path within same ring when going west"() {
         given:
         def board = new int[size][size];
         board[4][0] = 13
@@ -128,10 +128,10 @@ class PathCalculatorUtilsSpec extends Specification {
 
         where:
         size | startX | startY || position                    | expected
-        5    | 4      | 4      || new KnightPosition(3, 2, 2) | [[0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 2, 0, 0], [13, 0, 0, 0, 1]] as int[][]
+        5    | 4      | 4      || new KnightPosition(2, 0, 3) | [[0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [3, 0, 0, 0, 0], [0, 0, 2, 0, 0], [13, 0, 0, 0, 1]] as int[][]
     }
 
-    def "should not override existing value when going north"() {
+    def "should choose alternative path within same ring when going north"() {
         given:
         def board = new int[size][size];
         board[0][0] = 13
@@ -142,7 +142,7 @@ class PathCalculatorUtilsSpec extends Specification {
 
         where:
         size | startX | startY || position                    | expected
-        5    | 4      | 0      || new KnightPosition(2, 1, 2) | [[13, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 2, 0, 0, 0], [0, 0, 0, 0, 0], [1, 0, 0, 0, 0]] as int[][]
+        5    | 4      | 0      || new KnightPosition(0, 2, 3) | [[13, 0, 3, 0, 0], [0, 0, 0, 0, 0], [0, 2, 0, 0, 0], [0, 0, 0, 0, 0], [1, 0, 0, 0, 0]] as int[][]
     }
 
 }

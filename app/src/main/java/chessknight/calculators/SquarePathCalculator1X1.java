@@ -16,6 +16,7 @@ class SquarePathCalculator1X1 implements SquarePathCalculator {
             }
         }
 
+        //replace with stepEast
         goEast(board, position.step(), position.x(), position.y(), size/4);
 
         return new Board(board);
