@@ -21,7 +21,23 @@ class PathCalculatorUtils {
     }
 
     static KnightPosition goSouth(int[][] board, int step, int startX, int startY, int ringLevel) {
-        return null;
+        var x = startX;
+        var y = startY;
+
+        var tmpX = x;
+        var tmpY = y;
+
+        var easternBorder = board[0].length - (ringLevel * 2) - 1;
+
+        do {
+            board[x][y] = step++;
+            tmpX = x;
+            tmpY = y;
+            x += 2;
+            y += (easternBorder == y ? -1 : 1);
+        } while (withinRing(board, x, y, ringLevel));
+
+        return new KnightPosition(tmpX, tmpY, step - 1);
     }
 
     static KnightPosition goWest(int[][] board, int step, int startX, int startY, int ringLevel) {
