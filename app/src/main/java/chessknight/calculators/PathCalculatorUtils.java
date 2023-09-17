@@ -17,7 +17,7 @@ class PathCalculatorUtils {
             y += 2;
         } while (withinRing(board, x, y, ringLevel));
 
-        return new KnightPosition(tmpX, tmpY, step);
+        return new KnightPosition(tmpX, tmpY, step - 1);
     }
 
     static KnightPosition goSouth(int[][] board, int step, int startX, int startY, int ringLevel) {
