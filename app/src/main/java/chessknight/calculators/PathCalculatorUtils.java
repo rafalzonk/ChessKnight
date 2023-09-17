@@ -15,7 +15,7 @@ class PathCalculatorUtils {
             tmpY = y;
             x += (x % 2 == 0 ? 1 : -1);
             y += 2;
-        } while (withinRing(board, x, y, ringLevel));
+        } while (canMove(board, ringLevel, x, y));
 
         return new KnightPosition(tmpX, tmpY, step - 1);
     }
@@ -35,7 +35,7 @@ class PathCalculatorUtils {
             tmpY = y;
             x += 2;
             y += (easternBorder == y ? -1 : 1);
-        } while (withinRing(board, x, y, ringLevel));
+        } while (canMove(board, ringLevel, x, y));
 
         return new KnightPosition(tmpX, tmpY, step - 1);
     }
@@ -55,7 +55,7 @@ class PathCalculatorUtils {
             tmpY = y;
             x += (southernBorder == x ? -1 : 1);
             y -= 2;
-        } while (withinRing(board, x, y, ringLevel));
+        } while (canMove(board, ringLevel, x, y));
 
         return new KnightPosition(tmpX, tmpY, step - 1);
     }
@@ -73,7 +73,7 @@ class PathCalculatorUtils {
             tmpY = y;
             x -= 2;
             y += (y % 2 == 0 ? 1 : -1);
-        } while (withinRing(board, x, y, ringLevel));
+        } while (canMove(board, ringLevel, x, y));
 
         return new KnightPosition(tmpX, tmpY, step - 1);
     }
@@ -90,5 +90,15 @@ class PathCalculatorUtils {
     static boolean withinInnerRing(int[][] board, int x, int y, int ringLevel) {
         return x >= (1 + ringLevel) * 2 && x < (board.length - (1 + ringLevel) * 2) &&
                 y >= (1 + ringLevel) * 2 && y < (board[0].length - (1 + ringLevel) * 2);
+    }
+
+    private static boolean isFree(int[][] board, int x, int y) {
+        return x >= 0 && x < board.length &&
+                y >= 0 && y < board[0].length &&
+                board[x][y] == 0;
+    }
+
+    private static boolean canMove(int[][] board, int ringLevel, int x, int y) {
+        return isFree(board, x, y) && withinRing(board, x, y, ringLevel);
     }
 }
