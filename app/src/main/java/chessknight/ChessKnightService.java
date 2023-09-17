@@ -8,9 +8,9 @@ import static java.util.Optional.of;
 
 public class ChessKnightService {
 
-    public Optional<Board> calculatePath(int x, int y) {
-        if (x != y || x == 4) {
+    public Optional<Board> calculatePath(int xSize, int ySize) {
+        if (xSize != ySize || xSize == 4) {
             return Optional.empty();
-        } else return of(PathCalculators.calculatePath(x, y));
+        } else return of(PathCalculators.calculatePath(xSize, ySize));
     }
 }
