@@ -161,4 +161,28 @@ class PathCalculatorUtils {
     private static boolean canMove(int[][] board, int ringLevel, int x, int y) {
         return isFree(board, x, y) && withinRing(board, x, y, ringLevel);
     }
+
+    static KnightPosition circleStartingEast(KnightPosition position, int[][] board, int ringLevel) {
+        position = goEast(board, position.step(), position.x(), position.y(), ringLevel);
+        position = goSouth(board, position.step(), position.x(), position.y(), ringLevel);
+        position = goWest(board, position.step(), position.x(), position.y(), ringLevel);
+        position = goNorth(board, position.step(), position.x(), position.y(), ringLevel);
+        return position;
+    }
+
+    static KnightPosition circleStartingWest(KnightPosition position, int[][] board, int ringLevel) {
+        position = goWest(board, position.step(), position.x(), position.y(), ringLevel);
+        position = goNorth(board, position.step(), position.x(), position.y(), ringLevel);
+        position = goEast(board, position.step(), position.x(), position.y(), ringLevel);
+        position = goSouth(board, position.step(), position.x(), position.y(), ringLevel);
+        return position;
+    }
+
+    static KnightPosition circleStartingSouth(KnightPosition position, int[][] board, int ringLevel) {
+        position = goSouth(board, position.step(), position.x(), position.y(), ringLevel);
+        position = goWest(board, position.step(), position.x(), position.y(), ringLevel);
+        position = goNorth(board, position.step(), position.x(), position.y(), ringLevel);
+        position = goEast(board, position.step(), position.x(), position.y(), ringLevel);
+        return position;
+    }
 }
