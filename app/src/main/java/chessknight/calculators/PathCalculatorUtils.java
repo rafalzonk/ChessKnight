@@ -90,6 +90,54 @@ class PathCalculatorUtils {
         return new KnightPosition(tmpX, tmpY, board[tmpX][tmpY]);
     }
 
+    static KnightPosition stepNW(int[][] board, KnightPosition knightPosition) {
+        var newPosition = new KnightPosition(knightPosition.x() - 2, knightPosition.y() - 1, knightPosition.step() + 1);
+        board[newPosition.x()][newPosition.y()] = newPosition.step();
+        return newPosition;
+    }
+
+    static KnightPosition stepNE(int[][] board, KnightPosition knightPosition) {
+        var newPosition = new KnightPosition(knightPosition.x() - 2, knightPosition.y() + 1, knightPosition.step() + 1);
+        board[newPosition.x()][newPosition.y()] = newPosition.step();
+        return newPosition;
+    }
+
+    static KnightPosition stepEN(int[][] board, KnightPosition knightPosition) {
+        var newPosition = new KnightPosition(knightPosition.x() - 1, knightPosition.y() + 2, knightPosition.step() + 1);
+        board[newPosition.x()][newPosition.y()] = newPosition.step();
+        return newPosition;
+    }
+
+    static KnightPosition stepES(int[][] board, KnightPosition knightPosition) {
+        var newPosition = new KnightPosition(knightPosition.x() + 1, knightPosition.y() + 2, knightPosition.step() + 1);
+        board[newPosition.x()][newPosition.y()] = newPosition.step();
+        return newPosition;
+    }
+
+    static KnightPosition stepSE(int[][] board, KnightPosition knightPosition) {
+        var newPosition = new KnightPosition(knightPosition.x() + 2, knightPosition.y() + 1, knightPosition.step() + 1);
+        board[newPosition.x()][newPosition.y()] = newPosition.step();
+        return newPosition;
+    }
+
+    static KnightPosition stepSW(int[][] board, KnightPosition knightPosition) {
+        var newPosition = new KnightPosition(knightPosition.x() + 2, knightPosition.y() - 1, knightPosition.step() + 1);
+        board[newPosition.x()][newPosition.y()] = newPosition.step();
+        return newPosition;
+    }
+
+    static KnightPosition stepWS(int[][] board, KnightPosition knightPosition) {
+        var newPosition = new KnightPosition(knightPosition.x() + 1, knightPosition.y() - 2, knightPosition.step() + 1);
+        board[newPosition.x()][newPosition.y()] = newPosition.step();
+        return newPosition;
+    }
+
+    static KnightPosition stepWN(int[][] board, KnightPosition knightPosition) {
+        var newPosition = new KnightPosition(knightPosition.x() - 1, knightPosition.y() - 2, knightPosition.step() + 1);
+        board[newPosition.x()][newPosition.y()] = newPosition.step();
+        return newPosition;
+    }
+
     static boolean withinRing(int[][] board, int x, int y, int ringLevel) {
         return !withinInnerRing(board, x, y, ringLevel) && !withinOuterRing(board, x, y, ringLevel);
     }
