@@ -189,4 +189,8 @@ class KnightPosition {
     KnightPosition circleStartingSouth(int ringLevel) {
         return goSouth(ringLevel).goWest(ringLevel).goNorth(ringLevel).goEast(ringLevel);
     }
+
+    KnightPosition circleStartingSouthCounterclockwise(int ringLevel) {
+        return goSouth(ringLevel).goEast(ringLevel).goNorth(ringLevel).goWest(ringLevel);
+    }
 }
