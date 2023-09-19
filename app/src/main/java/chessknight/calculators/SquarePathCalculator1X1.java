@@ -7,18 +7,17 @@ import static chessknight.calculators.PathCalculatorUtils.*;
 class SquarePathCalculator1X1 implements SquarePathCalculator {
     @Override
     public Board calculatePath(int size) {
-        int[][] board = new int[size][size];
-        var position = new KnightPosition(0, 0, 1);
+        var position = new KnightPosition(0, 0, 1, new int[size][size]);
 
         for (int ringLevel = 0; ringLevel < size / 4; ringLevel++) {
             for (int i = 0; i < 4; i++) {
-                position = circleStartingEast(position, board, ringLevel);
+                position = position.circleStartingEast(ringLevel);
             }
         }
 
-        goEast(board, position.step(), position.x(), position.y(), size/4);
+        position.goEast(size / 4);
 
-        return new Board(board);
+        return new Board(position.getBoard());
     }
 
 
