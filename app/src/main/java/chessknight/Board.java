@@ -9,72 +9,59 @@ public record Board(int[][] chessBoard) {
         String separator;
         var x = chessBoard.length;
         int y = chessBoard[0].length;
-        int digitSpace;
+        int numberSpace = calculateNumberSpace(x, y);
 
-        if (x * y < 100) {
-            var ceiling = "══╤".repeat(y - 1);
-            sb.append(ceiling);
-            sb.append("══╗\n");
-            separator = "╟" + "──┼".repeat(y - 1) + "──╢\n";
-            digitSpace = 2;
-        } else if (x * y < 1000) {
-            var ceiling = "═══╤".repeat(y - 1);
-            sb.append(ceiling);
-            sb.append("═══╗\n");
-            separator = "╟" + "───┼".repeat(y - 1) + "───╢\n";
-            digitSpace = 3;
-        } else if (x * y < 10000) {
-            var ceiling = "════╤".repeat(y - 1);
-            sb.append(ceiling);
-            sb.append("════╗\n");
-            separator = "╟" + "────┼".repeat(y - 1) + "────╢\n";
-            digitSpace = 4;
-        } else {
-            var ceiling = "═════╤".repeat(y - 1);
-            sb.append(ceiling);
-            sb.append("═════╗\n");
-            separator = "╟" + "─────┼".repeat(y - 1) + "─────╢\n";
-            digitSpace = 5;
-        }
-
+        String thickLine = "═".repeat(numberSpace);
+        String thinLine = "─".repeat(numberSpace);
+        var ceiling = (thickLine + "╤").repeat(y - 1);
+        sb.append(ceiling);
+        sb.append(thickLine).append("╗\n");
+        separator = "╟" + (thinLine + "┼").repeat(y - 1) + thinLine + "╢\n";
 
         for (int i = 0; i < x - 1; i++) {
             sb.append("║");
             for (int j = 0; j < y - 1; j++) {
-                sb.append(formatNumber(chessBoard[i][j], digitSpace))
+                sb.append(formatNumber(chessBoard[i][j], numberSpace))
                         .append("│");
             }
-            sb.append(formatNumber(chessBoard[i][y - 1], digitSpace))
+            sb.append(formatNumber(chessBoard[i][y - 1], numberSpace))
                     .append("║\n")
                     .append(separator);
         }
 
         sb.append("║");
         for (int j = 0; j < y - 1; j++) {
-            sb.append(formatNumber(chessBoard[x - 1][j], digitSpace))
+            sb.append(formatNumber(chessBoard[x - 1][j], numberSpace))
                     .append("│");
         }
-        sb.append(formatNumber(chessBoard[x - 1][y - 1], digitSpace))
+        sb.append(formatNumber(chessBoard[x - 1][y - 1], numberSpace))
                 .append("║\n");
 
         sb.append("╚")
-                .append(("═".repeat(digitSpace) + "╧").repeat(y - 1))
-                .append("═".repeat(digitSpace))
+                .append((thickLine + "╧").repeat(y - 1))
+                .append(thickLine)
                 .append("╝\n");
         return sb.toString();
     }
 
-    private String formatNumber(int n, int digitSpace) {
+    private int calculateNumberSpace(int x, int y) {
+        var multi = x * y;
+        var numberSpace = 1;
+
+        while ((multi /= 10) != 0) numberSpace++;
+
+        return numberSpace;
+    }
+
+    private String formatNumber(int n, int numberSpace) {
         if (n == 0)
-            return " ".repeat(digitSpace);
-        if (n < 10)
-            return " ".repeat(digitSpace - 1) + n;
-        if (n < 100)
-            return " ".repeat(digitSpace - 2) + n;
-        if (n < 1000)
-            return " ".repeat(digitSpace - 3) + n;
-        if (n < 10000)
-            return " ".repeat(digitSpace - 4) + n;
-        return valueOf(n);
+            return " ".repeat(numberSpace);
+
+        var digits = 1;
+        var div = n;
+
+        while ((div /= 10) != 0) digits++;
+
+        return " ".repeat(numberSpace - digits) + n;
     }
 }
