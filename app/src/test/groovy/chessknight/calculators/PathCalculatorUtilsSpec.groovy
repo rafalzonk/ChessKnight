@@ -2,6 +2,10 @@ package chessknight.calculators
 
 import spock.lang.Specification
 
+import static chessknight.calculators.MatrixUtils.equals
+import static chessknight.calculators.PathCalculatorUtils.circleStartingEast
+import static chessknight.calculators.PathCalculatorUtils.circleStartingSouth
+import static chessknight.calculators.PathCalculatorUtils.circleStartingWest
 import static chessknight.calculators.PathCalculatorUtils.goEast
 import static chessknight.calculators.PathCalculatorUtils.goNorth
 import static chessknight.calculators.PathCalculatorUtils.goSouth
@@ -23,7 +27,7 @@ class PathCalculatorUtilsSpec extends Specification {
 
         expect:
         position == goEast(board, 1, startX, startY, 0)
-        MatrixUtils.equals(board, expected)
+        equals(board, expected)
 
         where:
         size | startX | startY || position                    | expected
@@ -43,7 +47,7 @@ class PathCalculatorUtilsSpec extends Specification {
 
         expect:
         position == goSouth(board, 1, startX, startY, 0)
-        MatrixUtils.equals(board, expected)
+        equals(board, expected)
 
         where:
         size | startX | startY || position                    | expected
@@ -63,7 +67,7 @@ class PathCalculatorUtilsSpec extends Specification {
 
         expect:
         position == goWest(board, 1, startX, startY, 0)
-        MatrixUtils.equals(board, expected)
+        equals(board, expected)
 
         where:
         size | startX | startY || position                    | expected
@@ -83,7 +87,7 @@ class PathCalculatorUtilsSpec extends Specification {
 
         expect:
         position == goNorth(board, 1, startX, startY, 0)
-        MatrixUtils.equals(board, expected)
+        equals(board, expected)
 
         where:
         size | startX | startY || position                    | expected
@@ -104,7 +108,7 @@ class PathCalculatorUtilsSpec extends Specification {
 
         expect:
         position == goEast(board, 1, startX, startY, 0)
-        MatrixUtils.equals(board, expected)
+        equals(board, expected)
 
         where:
         size | startX | startY || position                    | expected
@@ -118,7 +122,7 @@ class PathCalculatorUtilsSpec extends Specification {
 
         expect:
         position == goSouth(board, 1, startX, startY, 0)
-        MatrixUtils.equals(board, expected)
+        equals(board, expected)
 
         where:
         size | startX | startY || position                    | expected
@@ -132,7 +136,7 @@ class PathCalculatorUtilsSpec extends Specification {
 
         expect:
         position == goWest(board, 1, startX, startY, 0)
-        MatrixUtils.equals(board, expected)
+        equals(board, expected)
 
         where:
         size | startX | startY || position                    | expected
@@ -146,7 +150,7 @@ class PathCalculatorUtilsSpec extends Specification {
 
         expect:
         position == goNorth(board, 1, startX, startY, 0)
-        MatrixUtils.equals(board, expected)
+        equals(board, expected)
 
         where:
         size | startX | startY || position                    | expected
@@ -171,7 +175,48 @@ class PathCalculatorUtilsSpec extends Specification {
         then:
         position == new KnightPosition(0, 3, 8)
         def expected = [[0, 0, 0, 8, 0, 0, 0], [0, 7, 0, 0, 0, 1, 0], [0, 0, 0, 0, 0, 0, 0], [6, 0, 0, 0, 0, 0, 2], [0, 0, 0, 0, 0, 0, 0], [0, 5, 0, 0, 0, 3, 0], [0, 0, 0, 4, 0, 0, 0]] as int[][]
-        MatrixUtils.equals(board, expected)
+        equals(board, expected)
+    }
+
+    def "should fill path correctly when going in circles starting east"() {
+        given:
+        def board = new int[size][size]
+        var position = new KnightPosition(0, 0, 1);
+
+        expect:
+        expectedPosition == circleStartingEast(position, board, 0);
+        equals(board, expectedBoard as int[][])
+
+        expectedPosition2 == circleStartingEast(expectedPosition, board, 0);
+        equals(board, expectedBoard2 as int[][])
+
+        where:
+        size || expectedPosition             | expectedPosition2            | expectedBoard                                                                                                                                                                                                        | expectedBoard2
+        5    || new KnightPosition(0, 2, 9)  | new KnightPosition(0, 1, 14) | [[1, 0, 9, 0, 3], [0, 0, 2, 0, 0], [0, 8, 0, 4, 0], [0, 0, 6, 0, 0], [7, 0, 0, 0, 5]]                                                                                                                                | [[1, 14, 9, 0, 3], [0, 0, 2, 0, 10], [13, 8, 0, 4, 0], [0, 0, 6, 11, 0], [7, 12, 0, 0, 5]]
+        6    || new KnightPosition(0, 2, 9)  | new KnightPosition(1, 0, 16) | [[1, 0, 9, 0, 3, 0], [0, 0, 2, 0, 0, 0], [0, 8, 0, 0, 0, 4], [0, 0, 0, 0, 0, 0], [7, 0, 0, 0, 5, 0], [0, 0, 6, 0, 0, 0]]                                                                                             | [[1, 0, 9, 0, 3, 0], [16, 0, 2, 0, 10, 0], [0, 8, 0, 0, 0, 4], [0, 15, 0, 0, 0, 11], [7, 0, 13, 0, 5, 0], [14, 0, 6, 0, 12, 0]]
+        7    || new KnightPosition(0, 1, 12) | new KnightPosition(1, 0, 22) | [[1, 12, 0, 0, 3, 0, 0], [0, 0, 2, 0, 0, 0, 4], [11, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 5, 0], [0, 10, 0, 0, 0, 0, 0], [0, 0, 8, 0, 0, 0, 6], [9, 0, 0, 0, 7, 0, 0]]                                                 | [[1, 12, 0, 0, 3, 14, 0], [22, 0, 2, 13, 0, 0, 4], [11, 0, 0, 0, 0, 0, 15], [0, 21, 0, 0, 0, 5, 0], [0, 10, 0, 0, 0, 16, 0], [20, 0, 8, 0, 18, 0, 6], [9, 0, 19, 0, 7, 0, 17]]
+        8    || new KnightPosition(0, 2, 13) | new KnightPosition(1, 0, 24) | [[1, 0, 13, 0, 3, 0, 0, 0], [0, 0, 2, 0, 0, 0, 4, 0], [0, 12, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 5], [11, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 6, 0], [0, 10, 0, 0, 0, 8, 0, 0], [0, 0, 0, 9, 0, 0, 0, 7]] | [[1, 0, 13, 0, 3, 0, 15, 0], [24, 0, 2, 0, 14, 0, 4, 0], [0, 12, 0, 0, 0, 0, 0, 16], [0, 23, 0, 0, 0, 0, 0, 5], [11, 0, 0, 0, 0, 0, 17, 0], [22, 0, 0, 0, 0, 0, 6, 0], [0, 10, 0, 20, 0, 8, 0, 18], [0, 21, 0, 9, 0, 19, 0, 7]]
+
+    }
+
+    def "should fill path correctly when going in circles starting west"() {
+        given:
+        def board = new int[size][size]
+        var position = new KnightPosition(size - 1, size - 1, 1);
+
+        expect:
+        expectedPosition == circleStartingWest(position, board, 0);
+        equals(board, expectedBoard as int[][])
+
+        expectedPosition2 == circleStartingWest(expectedPosition, board, 0);
+        equals(board, expectedBoard2 as int[][])
+
+        where:
+        size || expectedPosition                           | expectedPosition2                          | expectedBoard                                                                                                                                                                                                        | expectedBoard2
+        5    || new KnightPosition(size - 1, size - 3, 9)  | new KnightPosition(size - 1, size - 2, 14) | [[5, 0, 0, 0, 7], [0, 0, 6, 0, 0], [0, 4, 0, 8, 0], [0, 0, 2, 0, 0], [3, 0, 9, 0, 1]]                                                                                                                                | [[5, 0, 0, 12, 7], [0, 11, 6, 0, 0], [0, 4, 0, 8, 13], [10, 0, 2, 0, 0], [3, 0, 9, 14, 1]]
+        6    || new KnightPosition(size - 1, size - 3, 9)  | new KnightPosition(size - 2, size - 1, 16) | [[0, 0, 0, 6, 0, 0], [0, 5, 0, 0, 0, 7], [0, 0, 0, 0, 0, 0], [4, 0, 0, 0, 8, 0], [0, 0, 0, 2, 0, 0], [0, 3, 0, 9, 0, 1]]                                                                                             | [[0, 12, 0, 6, 0, 14], [0, 5, 0, 13, 0, 7], [11, 0, 0, 0, 15, 0], [4, 0, 0, 0, 8, 0], [0, 10, 0, 2, 0, 16], [0, 3, 0, 9, 0, 1]]
+        7    || new KnightPosition(size - 1, size - 2, 12) | new KnightPosition(size - 2, size - 1, 22) | [[0, 0, 7, 0, 0, 0, 9], [6, 0, 0, 0, 8, 0, 0], [0, 0, 0, 0, 0, 10, 0], [0, 5, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 11], [4, 0, 0, 0, 2, 0, 0], [0, 0, 3, 0, 0, 12, 1]]                                                 | [[17, 0, 7, 0, 19, 0, 9], [6, 0, 18, 0, 8, 0, 20], [0, 16, 0, 0, 0, 10, 0], [0, 5, 0, 0, 0, 21, 0], [15, 0, 0, 0, 0, 0, 11], [4, 0, 0, 13, 2, 0, 22], [0, 14, 3, 0, 0, 12, 1]]
+        8    || new KnightPosition(size - 1, size - 3, 13) | new KnightPosition(size - 2, size - 1, 24) | [[7, 0, 0, 0, 9, 0, 0, 0], [0, 0, 8, 0, 0, 0, 10, 0], [0, 6, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 11], [5, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 12, 0], [0, 4, 0, 0, 0, 2, 0, 0], [0, 0, 0, 3, 0, 13, 0, 1]] | [[7, 0, 19, 0, 9, 0, 21, 0], [18, 0, 8, 0, 20, 0, 10, 0], [0, 6, 0, 0, 0, 0, 0, 22], [0, 17, 0, 0, 0, 0, 0, 11], [5, 0, 0, 0, 0, 0, 23, 0], [16, 0, 0, 0, 0, 0, 12, 0], [0, 4, 0, 14, 0, 2, 0, 24], [0, 15, 0, 3, 0, 13, 0, 1]]
 
     }
 
