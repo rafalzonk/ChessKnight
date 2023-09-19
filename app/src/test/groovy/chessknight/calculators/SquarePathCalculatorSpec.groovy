@@ -4,9 +4,7 @@ import spock.lang.Specification
 
 class SquarePathCalculatorSpec extends Specification {
     def "should find correct path for size 4n+1"() {
-        def calculator = new SquarePathCalculator1X1()
-
-        def path = calculator.calculatePath(size)
+        def path = new SquarePathCalculator1X1().calculatePath(size)
         print(path)
 
         where:
@@ -17,9 +15,7 @@ class SquarePathCalculatorSpec extends Specification {
     }
 
     def "should find correct path for size 4n+2"() {
-        def calculator = new SquarePathCalculator2X2()
-
-        def path = calculator.calculatePath(size)
+        def path = new SquarePathCalculator2X2().calculatePath(size)
         print(path)
 
         where:
@@ -27,5 +23,17 @@ class SquarePathCalculatorSpec extends Specification {
         6    | _
         10   | _
         14   | _
+    }
+
+    def "should find correct path for size 4n+3"() {
+        def path = new SquarePathCalculator3X3().calculatePath(size)
+        print(path)
+
+        where:
+        size | _
+        7    | _
+        11   | _
+        15   | _
+        19   | _
     }
 }

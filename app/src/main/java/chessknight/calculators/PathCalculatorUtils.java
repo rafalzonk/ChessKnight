@@ -2,8 +2,6 @@ package chessknight.calculators;
 
 class PathCalculatorUtils {
 
-
-
     static boolean withinRing(int[][] board, int x, int y, int ringLevel) {
         return !withinInnerRing(board, x, y, ringLevel) && !withinOuterRing(board, x, y, ringLevel);
     }
@@ -27,6 +25,5 @@ class PathCalculatorUtils {
     static boolean canMove(int[][] board, int ringLevel, int x, int y) {
         return isFree(board, x, y) && withinRing(board, x, y, ringLevel);
     }
-
 
 }
