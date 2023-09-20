@@ -76,6 +76,16 @@ class KnightPosition {
         return new KnightPosition(x - 1, y - 2, n + 1, board).step();
     }
 
+    int calculateNewCoordinate(int current, int size) {
+        if (current < size / 2) {
+            return current % 2 == 0 ?
+                    1 :
+                    -1;
+        } else return (size - current + 1) % 2 == 0 ?
+                -1 :
+                1;
+    }
+
     KnightPosition goEast(int ringLevel) {
         var currentX = x;
         var currentY = y;
@@ -88,10 +98,11 @@ class KnightPosition {
             board[currentX][currentY] = step++;
             tmpX = currentX;
             tmpY = currentY;
-            currentX += (currentX % 2 == 0 ? 1 : -1);
+            var currentXDiff = calculateNewCoordinate(currentX, board.length);
+            currentX += currentXDiff;
             currentY += 2;
             if (!isFree(board, currentX, currentY)) {
-                currentX += (currentX % 2 == 0 ? 2 : -2);
+                currentX -= currentXDiff * 2;
             }
         } while (canMove(board, ringLevel, currentX, currentY));
 
@@ -106,16 +117,15 @@ class KnightPosition {
         var tmpX = currentX;
         var tmpY = currentY;
 
-        var easternBorder = board[0].length - (ringLevel * 2) - 1;
-
         do {
             board[currentX][currentY] = step++;
             tmpX = currentX;
             tmpY = currentY;
             currentX += 2;
-            currentY += (easternBorder == currentY ? -1 : 1);
+            var currentYDiff = calculateNewCoordinate(currentY, board[0].length);
+            currentY += currentYDiff;
             if (!isFree(board, currentX, currentY)) {
-                currentY += (easternBorder == currentY ? -2 : 2);
+                currentY -= currentYDiff * 2;
             }
         } while (canMove(board, ringLevel, currentX, currentY));
 
@@ -130,16 +140,15 @@ class KnightPosition {
         var tmpX = currentX;
         var tmpY = currentY;
 
-        var southernBorder = board.length - (ringLevel * 2) - 1;
-
         do {
             board[currentX][currentY] = step++;
             tmpX = currentX;
             tmpY = currentY;
-            currentX += (southernBorder == currentX ? -1 : 1);
+            var currentXDiff = calculateNewCoordinate(currentX, board.length);
+            currentX += currentXDiff;
             currentY -= 2;
             if (!isFree(board, currentX, currentY)) {
-                currentX += (southernBorder == currentX ? -2 : 2);
+                currentX -= currentXDiff * 2;
             }
         } while (canMove(board, ringLevel, currentX, currentY));
 
@@ -159,9 +168,10 @@ class KnightPosition {
             tmpX = currentX;
             tmpY = currentY;
             currentX -= 2;
-            currentY += (currentY % 2 == 0 ? 1 : -1);
+            var currentYDiff = calculateNewCoordinate(currentY, board[0].length);
+            currentY += currentYDiff;
             if (!isFree(board, currentX, currentY)) {
-                currentY += (currentY % 2 == 0 ? 2 : -2);
+                currentY -= currentYDiff * 2;
             }
         } while (canMove(board, ringLevel, currentX, currentY));
 
