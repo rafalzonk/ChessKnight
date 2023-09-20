@@ -36,4 +36,15 @@ class SquarePathCalculatorSpec extends Specification {
         15   | _
         19   | _
     }
+
+    def "should find correct path for size 4n+4"() {
+        def path = new SquarePathCalculator4X4().calculatePath(size)
+        print(path)
+
+        where:
+        size | _
+        8    | _
+        12   | _
+        16   | _
+    }
 }
